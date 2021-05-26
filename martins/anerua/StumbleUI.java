@@ -16,6 +16,10 @@ public class StumbleUI implements ActionListener{
 	private Timer timer;
 	
 	private Game game;
+	
+	private static final int FAST = 30;
+	private static final int MEDIUM = 70;
+	private static final int SLOW = 120;
 
 	/**
 	 * Launch the application.
@@ -49,7 +53,7 @@ public class StumbleUI implements ActionListener{
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		timer = new Timer(30, this);
+		timer = new Timer(FAST, this);
 		frame = new JFrame();
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

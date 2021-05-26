@@ -18,14 +18,14 @@ import javax.swing.JComponent;
 
 @SuppressWarnings("serial")
 public class Game extends JComponent {
-	
+
 	private static final int LEFT = -1, RIGHT = 1, DOWN = -2, UP = 2, STILL = 0;
 
 	private BufferedImage buffer;
 
 	int xLocation = 100, yLocation = 100, snakeWidth = 10, snakeHeight = 10;
-	int step = 5;
-	
+	int step = 10;
+
 	List<Ellipse2D.Double> snake = new ArrayList<Ellipse2D.Double>();
 
 	int direction = STILL; // -1 ==> left, 1 ==> right, -2 ==> up, 2 ==> down, else ==> still
@@ -33,10 +33,9 @@ public class Game extends JComponent {
 	boolean x_lock = false, y_lock = false;
 
 	public Game() {
-		
+
 		snake.add(new Ellipse2D.Double(xLocation, yLocation, snakeWidth, snakeHeight));
-		
-		
+
 		addComponentListener(new ComponentAdapter() {
 
 			@Override
@@ -113,7 +112,7 @@ public class Game extends JComponent {
 		g.fillRect(0, 0, getWidth(), getHeight());
 
 		g.setColor(Color.BLUE);
-		
+
 		for (Ellipse2D.Double segment : snake) {
 			g.fill(segment);
 		}
@@ -136,11 +135,11 @@ public class Game extends JComponent {
 		snake.get(0).x = snake_x;
 		snake.get(0).y = snake_y;
 	}
-	
+
 	private void updateSnakeSegmentPosition(double old_x, double old_y) {
 		double new_x = old_x, new_y = old_y;
 		double temp_x = new_x, temp_y = new_y;
-		
+
 		for (int i = 1; i < snake.size(); i++) {
 			temp_x = snake.get(i).x;
 			temp_y = snake.get(i).y;
@@ -150,13 +149,14 @@ public class Game extends JComponent {
 			new_y = temp_y;
 		}
 	}
-	
+
 	private void addSegment(int new_direction) {
 		double tail_x = snake.get(snake.size() - 1).x;
 		double tail_y = snake.get(snake.size() - 1).y;
-		
+
 		double new_x = 0, new_y = 0;
-		switch(prev_direction) {
+		
+		switch (prev_direction) {
 		case LEFT:
 			new_x = tail_x + 10;
 			break;
@@ -170,7 +170,7 @@ public class Game extends JComponent {
 			new_y = tail_y - 10;
 			break;
 		case STILL:
-			switch(new_direction) {
+			switch (new_direction) {
 			case LEFT:
 				new_x = tail_x + 10;
 				break;
@@ -186,7 +186,7 @@ public class Game extends JComponent {
 			}
 			break;
 		}
-		
+
 		snake.add(new Ellipse2D.Double(new_x, new_y, snakeWidth, snakeHeight));
 	}
 
@@ -195,7 +195,7 @@ public class Game extends JComponent {
 
 		double new_x = snakeHead.x;
 		double new_y = snakeHead.y;
-		
+
 		double old_x = new_x, old_y = new_y;
 
 		switch (direction) {
@@ -214,7 +214,7 @@ public class Game extends JComponent {
 		}
 
 		updateSnakePosition(new_x, new_y);
-		
+
 		updateSnakeSegmentPosition(old_x, old_y);
 
 		repaint();
