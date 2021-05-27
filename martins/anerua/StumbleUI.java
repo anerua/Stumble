@@ -8,6 +8,7 @@ import javax.swing.JFrame;
 import javax.swing.Timer;
 import javax.swing.UIManager;
 import java.awt.BorderLayout;
+import java.awt.Frame;
 
 public class StumbleUI implements ActionListener{
 
@@ -55,7 +56,8 @@ public class StumbleUI implements ActionListener{
 	private void initialize() {
 		timer = new Timer(FAST, this);
 		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 300);
+		frame.setExtendedState(Frame.MAXIMIZED_BOTH);
+		frame.setBounds(100, 100, 516, 334);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(new BorderLayout(0, 0));
 		game = new Game();

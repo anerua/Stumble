@@ -12,7 +12,6 @@ import java.awt.event.KeyEvent;
 import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.JComponent;
 
@@ -26,11 +25,15 @@ public class Game extends JComponent {
 	int xLocation = 100, yLocation = 100, snakeWidth = 10, snakeHeight = 10;
 	int step = 10;
 
-	List<Ellipse2D.Double> snake = new ArrayList<Ellipse2D.Double>();
+	ArrayList<Ellipse2D.Double> snake = new ArrayList<Ellipse2D.Double>();
 
 	int direction = STILL; // -1 ==> left, 1 ==> right, -2 ==> up, 2 ==> down, else ==> still
 	int prev_direction = STILL;
 	boolean x_lock = false, y_lock = false;
+	
+	FoodSeeder fs;
+	Ellipse2D.Double food;
+	boolean eaten = true;
 
 	public Game() {
 
@@ -102,17 +105,28 @@ public class Game extends JComponent {
 
 		if (buffer == null) {
 			buffer = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_RGB);
+			fs = new FoodSeeder(getWidth(), getHeight());
 		}
 
 		Graphics2D g = (Graphics2D) buffer.getGraphics();
+		
+		if (eaten) {
+			food = fs.seedFood(snake);
+			eaten = false;
+		}
 
 		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
+		// paint board
 		g.setColor(Color.white);
 		g.fillRect(0, 0, getWidth(), getHeight());
 
+		// draw food
+		g.setColor(Color.red);
+		g.fill(food);
+		
+		// draw snake
 		g.setColor(Color.BLUE);
-
 		for (Ellipse2D.Double segment : snake) {
 			g.fill(segment);
 		}
