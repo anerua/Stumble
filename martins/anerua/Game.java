@@ -27,15 +27,14 @@ public class Game extends JComponent {
 
 	ArrayList<Ellipse2D.Double> snake = new ArrayList<Ellipse2D.Double>();
 
-	int direction = STILL; // -1 ==> left, 1 ==> right, -2 ==> up, 2 ==> down, else ==> still
-	int prev_direction = STILL;
+	int direction = STILL;
 	boolean x_lock = false, y_lock = false;
 	
 	FoodSeeder fs;
 	Ellipse2D.Double food;
 	boolean eaten = true, grow = false;
 	
-	double tail_x = start_x, tail_y = start_y;
+	double tail_x = start_x, tail_y = start_y; // position of snake tail
 
 	public Game() {
 
@@ -60,8 +59,6 @@ public class Game extends JComponent {
 				switch (key) {
 				case KeyEvent.VK_LEFT:
 					if (!x_lock) {
-						prev_direction = direction;
-//						addSegment(LEFT);
 						direction = LEFT;
 						x_lock = true;
 						y_lock = false;
@@ -69,8 +66,6 @@ public class Game extends JComponent {
 					break;
 				case KeyEvent.VK_RIGHT:
 					if (!x_lock) {
-						prev_direction = direction;
-//						addSegment(RIGHT);
 						direction = RIGHT;
 						x_lock = true;
 						y_lock = false;
@@ -78,8 +73,6 @@ public class Game extends JComponent {
 					break;
 				case KeyEvent.VK_UP:
 					if (!y_lock) {
-						prev_direction = direction;
-//						addSegment(UP);
 						direction = UP;
 						x_lock = false;
 						y_lock = true;
@@ -87,8 +80,6 @@ public class Game extends JComponent {
 					break;
 				case KeyEvent.VK_DOWN:
 					if (!y_lock) {
-						prev_direction = direction;
-//						addSegment(DOWN);
 						direction = DOWN;
 						x_lock = false;
 						y_lock = true;
@@ -107,11 +98,13 @@ public class Game extends JComponent {
 
 		if (buffer == null) {
 			buffer = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_RGB);
-			fs = new FoodSeeder(getWidth(), getHeight());
+			
+			fs = new FoodSeeder(getWidth(), getHeight());  // define FoodSeeder here to obtain non-zero width and height of JComponent
 		}
 
 		Graphics2D g = (Graphics2D) buffer.getGraphics();
 		
+		// If food has been eaten, generate a new food
 		if (eaten) {
 			food = fs.seedFood(snake);
 			eaten = false;
@@ -136,22 +129,34 @@ public class Game extends JComponent {
 		g1.drawImage(buffer, 0, 0, null);
 	}
 
-	private void updateSnakePosition(double snake_x, double snake_y) {
-		if (snake_x > getWidth()) {
-			snake_x = 0 - snakeWidth;
-		} else if (snake_x < 0 - snakeWidth) {
-			snake_x = getWidth();
+	/**
+	 * Moves the snake head to snakeHead_x and snakeHead_y position
+	 * 
+	 * @param snakeHead_x - new x position of snake head
+	 * @param snakeHead_y - new y position of snake head
+	 */
+	private void updateSnakeHeadPosition(double snakeHead_x, double snakeHead_y) {
+		if (snakeHead_x > getWidth()) {
+			snakeHead_x = 0 - snakeWidth;
+		} else if (snakeHead_x < 0 - snakeWidth) {
+			snakeHead_x = getWidth();
 		}
-		if (snake_y > getHeight()) {
-			snake_y = 0 - snakeHeight;
-		} else if (snake_y < 0 - snakeHeight) {
-			snake_y = getHeight();
+		if (snakeHead_y > getHeight()) {
+			snakeHead_y = 0 - snakeHeight;
+		} else if (snakeHead_y < 0 - snakeHeight) {
+			snakeHead_y = getHeight();
 		}
 
-		snake.get(0).x = snake_x;
-		snake.get(0).y = snake_y;
+		snake.get(0).x = snakeHead_x;
+		snake.get(0).y = snakeHead_y;
 	}
 
+	/**
+	 * Moves other snake segment in line with snake head
+	 * 
+	 * @param old_x - previous x position of snake head
+	 * @param old_y - previous y position of snake head
+	 */
 	private void updateSnakeSegmentPosition(double old_x, double old_y) {
 		double new_x = old_x, new_y = old_y;
 		double temp_x = new_x, temp_y = new_y;
@@ -166,45 +171,10 @@ public class Game extends JComponent {
 		}
 	}
 
+	/**
+	 * 	Adds a snake segment at previous position of snake tail
+	 */
 	private void growSnake() {
-//		double tail_x = snake.get(snake.size() - 1).x;
-//		double tail_y = snake.get(snake.size() - 1).y;
-//
-//		double new_x = 0, new_y = 0;
-//		
-//		switch (prev_direction) {
-//		case LEFT:
-//			new_x = tail_x + 10;
-//			break;
-//		case RIGHT:
-//			new_x = tail_x - 10;
-//			break;
-//		case UP:
-//			new_y = tail_y + 10;
-//			break;
-//		case DOWN:
-//			new_y = tail_y - 10;
-//			break;
-//		case STILL:
-//			switch (new_direction) {
-//			case LEFT:
-//				new_x = tail_x + 10;
-//				break;
-//			case RIGHT:
-//				new_x = tail_x - 10;
-//				break;
-//			case UP:
-//				new_y = tail_y + 10;
-//				break;
-//			case DOWN:
-//				new_y = tail_y - 10;
-//				break;
-//			}
-//			break;
-//		}
-		
-		
-
 		snake.add(new Ellipse2D.Double(tail_x, tail_y, snakeWidth, snakeHeight));
 	}
 
@@ -237,7 +207,7 @@ public class Game extends JComponent {
 			break;
 		}
 
-		updateSnakePosition(new_x, new_y);
+		updateSnakeHeadPosition(new_x, new_y);
 
 		updateSnakeSegmentPosition(old_x, old_y);
 		
