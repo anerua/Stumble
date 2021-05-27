@@ -29,7 +29,6 @@ public class FoodSeeder {
 			bad_y.add((int)segment.y);
 		}
 	
-		System.out.println(MAX_X);
 		int chosen_x = random.nextInt(MAX_X);
 		while (bad_x.contains(chosen_x)) {
 			chosen_x = random.nextInt(MAX_X);

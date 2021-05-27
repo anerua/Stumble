@@ -230,6 +230,12 @@ public class Game extends JComponent {
 		updateSnakePosition(new_x, new_y);
 
 		updateSnakeSegmentPosition(old_x, old_y);
+		
+		if (!eaten) {
+			if (snakeHead.intersects(food.getBounds2D())) {
+				eaten = true;
+			}
+		}
 
 		repaint();
 	}
