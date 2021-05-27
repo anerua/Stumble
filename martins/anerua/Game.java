@@ -121,10 +121,15 @@ public class Game extends JComponent {
 		g.setColor(Color.red);
 		g.fill(food);
 
+		
+		// draw snake head
+		g.setColor(Color.blue);
+		g.fill(snake.get(0));
+		
 		// draw snake
-		g.setColor(Color.BLUE);
-		for (Ellipse2D.Double segment : snake) {
-			g.fill(segment);
+		g.setColor(Color.green);
+		for (int i = 1; i < snake.size(); i++) {
+			g.fill(snake.get(i));
 		}
 
 		g1.drawImage(buffer, 0, 0, null);

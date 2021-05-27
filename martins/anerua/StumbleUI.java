@@ -54,7 +54,7 @@ public class StumbleUI implements ActionListener{
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		timer = new Timer(FAST, this);
+		timer = new Timer(MEDIUM, this);
 		frame = new JFrame();
 		frame.setExtendedState(Frame.MAXIMIZED_BOTH);
 		frame.setBounds(100, 100, 516, 334);
