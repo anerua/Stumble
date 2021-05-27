@@ -8,8 +8,8 @@ import java.util.Set;
 
 public class FoodSeeder {
 	
-	private static final int FOOD_WIDTH = 20;
-	private static final int FOOD_HEIGHT = 20;
+	private static final int FOOD_WIDTH = 10;
+	private static final int FOOD_HEIGHT = 10;
 	
 	private static int MAX_X, MAX_Y;
 
