@@ -22,7 +22,7 @@ public class Game extends JComponent {
 
 	private BufferedImage buffer;
 
-	int xLocation = 100, yLocation = 100, snakeWidth = 10, snakeHeight = 10;
+	int start_x = 100, start_y = 100, snakeWidth = 10, snakeHeight = 10;
 	int step = 10;
 
 	ArrayList<Ellipse2D.Double> snake = new ArrayList<Ellipse2D.Double>();
@@ -33,11 +33,13 @@ public class Game extends JComponent {
 	
 	FoodSeeder fs;
 	Ellipse2D.Double food;
-	boolean eaten = true;
+	boolean eaten = true, grow = false;
+	
+	double tail_x = start_x, tail_y = start_y;
 
 	public Game() {
 
-		snake.add(new Ellipse2D.Double(xLocation, yLocation, snakeWidth, snakeHeight));
+		snake.add(new Ellipse2D.Double(start_x, start_y, snakeWidth, snakeHeight));
 
 		addComponentListener(new ComponentAdapter() {
 
@@ -59,7 +61,7 @@ public class Game extends JComponent {
 				case KeyEvent.VK_LEFT:
 					if (!x_lock) {
 						prev_direction = direction;
-						addSegment(LEFT);
+//						addSegment(LEFT);
 						direction = LEFT;
 						x_lock = true;
 						y_lock = false;
@@ -68,7 +70,7 @@ public class Game extends JComponent {
 				case KeyEvent.VK_RIGHT:
 					if (!x_lock) {
 						prev_direction = direction;
-						addSegment(RIGHT);
+//						addSegment(RIGHT);
 						direction = RIGHT;
 						x_lock = true;
 						y_lock = false;
@@ -77,7 +79,7 @@ public class Game extends JComponent {
 				case KeyEvent.VK_UP:
 					if (!y_lock) {
 						prev_direction = direction;
-						addSegment(UP);
+//						addSegment(UP);
 						direction = UP;
 						x_lock = false;
 						y_lock = true;
@@ -86,7 +88,7 @@ public class Game extends JComponent {
 				case KeyEvent.VK_DOWN:
 					if (!y_lock) {
 						prev_direction = direction;
-						addSegment(DOWN);
+//						addSegment(DOWN);
 						direction = DOWN;
 						x_lock = false;
 						y_lock = true;
@@ -164,47 +166,55 @@ public class Game extends JComponent {
 		}
 	}
 
-	private void addSegment(int new_direction) {
-		double tail_x = snake.get(snake.size() - 1).x;
-		double tail_y = snake.get(snake.size() - 1).y;
-
-		double new_x = 0, new_y = 0;
+	private void growSnake() {
+//		double tail_x = snake.get(snake.size() - 1).x;
+//		double tail_y = snake.get(snake.size() - 1).y;
+//
+//		double new_x = 0, new_y = 0;
+//		
+//		switch (prev_direction) {
+//		case LEFT:
+//			new_x = tail_x + 10;
+//			break;
+//		case RIGHT:
+//			new_x = tail_x - 10;
+//			break;
+//		case UP:
+//			new_y = tail_y + 10;
+//			break;
+//		case DOWN:
+//			new_y = tail_y - 10;
+//			break;
+//		case STILL:
+//			switch (new_direction) {
+//			case LEFT:
+//				new_x = tail_x + 10;
+//				break;
+//			case RIGHT:
+//				new_x = tail_x - 10;
+//				break;
+//			case UP:
+//				new_y = tail_y + 10;
+//				break;
+//			case DOWN:
+//				new_y = tail_y - 10;
+//				break;
+//			}
+//			break;
+//		}
 		
-		switch (prev_direction) {
-		case LEFT:
-			new_x = tail_x + 10;
-			break;
-		case RIGHT:
-			new_x = tail_x - 10;
-			break;
-		case UP:
-			new_y = tail_y + 10;
-			break;
-		case DOWN:
-			new_y = tail_y - 10;
-			break;
-		case STILL:
-			switch (new_direction) {
-			case LEFT:
-				new_x = tail_x + 10;
-				break;
-			case RIGHT:
-				new_x = tail_x - 10;
-				break;
-			case UP:
-				new_y = tail_y + 10;
-				break;
-			case DOWN:
-				new_y = tail_y - 10;
-				break;
-			}
-			break;
-		}
+		
 
-		snake.add(new Ellipse2D.Double(new_x, new_y, snakeWidth, snakeHeight));
+		snake.add(new Ellipse2D.Double(tail_x, tail_y, snakeWidth, snakeHeight));
 	}
 
 	public void update() {
+		
+		if (grow) {
+			growSnake();
+			grow = false;
+		}
+		
 		Ellipse2D.Double snakeHead = snake.get(0);
 
 		double new_x = snakeHead.x;
@@ -234,6 +244,9 @@ public class Game extends JComponent {
 		if (!eaten) {
 			if (snakeHead.intersects(food.getBounds2D())) {
 				eaten = true;
+				grow = true;
+				tail_x = snake.get(snake.size() - 1).x;
+				tail_y = snake.get(snake.size() - 1).y;
 			}
 		}
 
