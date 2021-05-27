@@ -130,7 +130,7 @@ public class Game extends JComponent {
 	}
 
 	/**
-	 * Moves the snake head to snakeHead_x and snakeHead_y position
+	 * Moves the snake head to snakeHead_x and snakeHead_y position.
 	 * 
 	 * @param snakeHead_x - new x position of snake head
 	 * @param snakeHead_y - new y position of snake head
@@ -152,13 +152,13 @@ public class Game extends JComponent {
 	}
 
 	/**
-	 * Moves other snake segment in line with snake head
+	 * Moves other snake segment in line with snake head.
 	 * 
-	 * @param old_x - previous x position of snake head
-	 * @param old_y - previous y position of snake head
+	 * @param oldSnakeHead_x - previous x position of snake head
+	 * @param oldSnakeHead_y - previous y position of snake head
 	 */
-	private void updateSnakeSegmentPosition(double old_x, double old_y) {
-		double new_x = old_x, new_y = old_y;
+	private void updateSnakeSegmentPosition(double oldSnakeHead_x, double oldSnakeHead_y) {
+		double new_x = oldSnakeHead_x, new_y = oldSnakeHead_y;
 		double temp_x = new_x, temp_y = new_y;
 
 		for (int i = 1; i < snake.size(); i++) {
@@ -170,6 +170,19 @@ public class Game extends JComponent {
 			new_y = temp_y;
 		}
 	}
+	
+	/**
+	 * Moves snake according to key input and step.
+	 * 
+	 * @param oldSnakeHead_x - old x position of snake head
+	 * @param oldSnakeHead_y - old y position of snake head
+	 * @param newSnakeHead_x - new x position of snake head
+	 * @param newSnakeHead_y - new y position of snake head
+	 */
+	private void moveSnake(double oldSnakeHead_x, double oldSnakeHead_y, double newSnakeHead_x, double newSnakeHead_y) {
+		updateSnakeHeadPosition(newSnakeHead_x, newSnakeHead_y);
+		updateSnakeSegmentPosition(oldSnakeHead_x, oldSnakeHead_y);
+	}
 
 	/**
 	 * 	Adds a snake segment at previous position of snake tail
@@ -178,6 +191,9 @@ public class Game extends JComponent {
 		snake.add(new Ellipse2D.Double(tail_x, tail_y, snakeWidth, snakeHeight));
 	}
 
+	/**
+	 * Main game repeating function. Follows Timer in Main UI.
+	 */
 	public void update() {
 		
 		if (grow) {
@@ -207,9 +223,7 @@ public class Game extends JComponent {
 			break;
 		}
 
-		updateSnakeHeadPosition(new_x, new_y);
-
-		updateSnakeSegmentPosition(old_x, old_y);
+		moveSnake(old_x, old_y, new_x, new_y);
 		
 		if (!eaten) {
 			if (snakeHead.intersects(food.getBounds2D())) {
