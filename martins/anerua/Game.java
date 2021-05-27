@@ -29,11 +29,11 @@ public class Game extends JComponent {
 
 	int direction = STILL;
 	boolean x_lock = false, y_lock = false;
-	
+
 	FoodSeeder fs;
 	Ellipse2D.Double food;
 	boolean eaten = true, grow = false;
-	
+
 	double tail_x = start_x, tail_y = start_y; // position of snake tail
 
 	public Game() {
@@ -98,12 +98,13 @@ public class Game extends JComponent {
 
 		if (buffer == null) {
 			buffer = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_RGB);
-			
-			fs = new FoodSeeder(getWidth(), getHeight());  // define FoodSeeder here to obtain non-zero width and height of JComponent
+
+			fs = new FoodSeeder(getWidth(), getHeight()); // define FoodSeeder here to obtain non-zero width and height
+															// of JComponent
 		}
 
 		Graphics2D g = (Graphics2D) buffer.getGraphics();
-		
+
 		// If food has been eaten, generate a new food
 		if (eaten) {
 			food = fs.seedFood(snake);
@@ -119,7 +120,7 @@ public class Game extends JComponent {
 		// draw food
 		g.setColor(Color.red);
 		g.fill(food);
-		
+
 		// draw snake
 		g.setColor(Color.BLUE);
 		for (Ellipse2D.Double segment : snake) {
@@ -170,7 +171,7 @@ public class Game extends JComponent {
 			new_y = temp_y;
 		}
 	}
-	
+
 	/**
 	 * Moves snake according to key input and step.
 	 * 
@@ -185,7 +186,7 @@ public class Game extends JComponent {
 	}
 
 	/**
-	 * 	Adds a snake segment at previous position of snake tail
+	 * Adds a snake segment at previous position of snake tail
 	 */
 	private void growSnake() {
 		snake.add(new Ellipse2D.Double(tail_x, tail_y, snakeWidth, snakeHeight));
@@ -195,36 +196,36 @@ public class Game extends JComponent {
 	 * Main game repeating function. Follows Timer in Main UI.
 	 */
 	public void update() {
-		
+
 		if (grow) {
 			growSnake();
 			grow = false;
 		}
-		
+
 		Ellipse2D.Double snakeHead = snake.get(0);
 
-		double new_x = snakeHead.x;
-		double new_y = snakeHead.y;
+		double newSnakeHead_x = snakeHead.x;
+		double newSnakeHead_y = snakeHead.y;
 
-		double old_x = new_x, old_y = new_y;
+		double oldSnakeHead_x = newSnakeHead_x, oldSnakeHead_y = newSnakeHead_y;
 
 		switch (direction) {
 		case LEFT:
-			new_x = snakeHead.x - step;
+			newSnakeHead_x = snakeHead.x - step;
 			break;
 		case RIGHT:
-			new_x = snakeHead.x + step;
+			newSnakeHead_x = snakeHead.x + step;
 			break;
 		case UP:
-			new_y = snakeHead.y - step;
+			newSnakeHead_y = snakeHead.y - step;
 			break;
 		case DOWN:
-			new_y = snakeHead.y + step;
+			newSnakeHead_y = snakeHead.y + step;
 			break;
 		}
 
-		moveSnake(old_x, old_y, new_x, new_y);
-		
+		moveSnake(oldSnakeHead_x, oldSnakeHead_y, newSnakeHead_x, newSnakeHead_y);
+
 		if (!eaten) {
 			if (snakeHead.intersects(food.getBounds2D())) {
 				eaten = true;
