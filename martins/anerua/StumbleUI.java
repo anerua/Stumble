@@ -16,12 +16,11 @@ import javax.swing.UIManager;
 public class StumbleUI implements ActionListener{
 
 	private JFrame frame;
+	private JLabel scoreValue;
 	
 	private Timer timer;
 	
 	private Game game;
-	
-	public int score;
 	
 	private static final int FAST = 30;
 	private static final int MEDIUM = 70;
@@ -86,13 +85,13 @@ public class StumbleUI implements ActionListener{
 		gbc_scoreLabel.gridy = 0;
 		panel.add(scoreLabel, gbc_scoreLabel);
 		
-		JLabel scoreValue = new JLabel();
-		scoreValue.setText(Integer.toString(score));
+		scoreValue = new JLabel();
+		scoreValue.setText(Integer.toString(0));
 		GridBagConstraints gbc_scoreValue = new GridBagConstraints();
 		gbc_scoreValue.gridx = 0;
 		gbc_scoreValue.gridy = 1;
 		panel.add(scoreValue, gbc_scoreValue);
-		score = 0;
+		
 		
 		timer.start();
 	}
@@ -100,6 +99,7 @@ public class StumbleUI implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		Boolean game_over = game.update();
+		scoreValue.setText(Integer.toString(game.getScore()));
 		if (game_over) {
 			timer.stop();
 		}
