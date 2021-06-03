@@ -22,19 +22,21 @@ public class Game extends JComponent {
 
 	private BufferedImage buffer;
 
-	int start_x = 100, start_y = 100, snakeWidth = 10, snakeHeight = 10;
-	int step = 10;
+	private int start_x = 100, start_y = 100, snakeWidth = 10, snakeHeight = 10;
+	private int step = 10;
 
-	ArrayList<Ellipse2D.Double> snake = new ArrayList<Ellipse2D.Double>();
+	private ArrayList<Ellipse2D.Double> snake = new ArrayList<Ellipse2D.Double>();
 
-	int direction = STILL;
-	boolean x_lock = false, y_lock = false;
+	private int direction = STILL;
+	private boolean x_lock = false, y_lock = false;
 
-	FoodSeeder fs;
-	Ellipse2D.Double food;
-	boolean eaten = true, grow = false;
+	private FoodSeeder fs;
+	private Ellipse2D.Double food;
+	private boolean eaten = true, grow = false;
 
-	double tail_x = start_x, tail_y = start_y; // position of snake tail
+	private double tail_x = start_x, tail_y = start_y; // position of snake tail
+	
+	private int score = 0;
 
 	public Game() {
 
@@ -196,6 +198,10 @@ public class Game extends JComponent {
 	private void growSnake() {
 		snake.add(new Ellipse2D.Double(tail_x, tail_y, snakeWidth, snakeHeight));
 	}
+	
+	public int getScore() {
+		return score;
+	}
 
 	/**
 	 * Main game repeating function. Follows Timer in Main UI.
@@ -241,6 +247,7 @@ public class Game extends JComponent {
 			if (snakeHead.intersects(food.getBounds2D())) {
 				eaten = true;
 				grow = true;
+				++score;
 				tail_x = snake.get(snake.size() - 1).x;
 				tail_y = snake.get(snake.size() - 1).y;
 			}
