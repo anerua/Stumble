@@ -200,7 +200,7 @@ public class Game extends JComponent {
 	/**
 	 * Main game repeating function. Follows Timer in Main UI.
 	 */
-	public void update() {
+	public Boolean update() {
 
 		if (grow) {
 			growSnake();
@@ -230,6 +230,13 @@ public class Game extends JComponent {
 		}
 
 		moveSnake(oldSnakeHead_x, oldSnakeHead_y, newSnakeHead_x, newSnakeHead_y);
+		
+		for (int i = 1; i < snake.size(); i++) {
+			if (snakeHead.intersects(snake.get(i).getBounds2D())) {
+				System.out.println("Game over");
+				return true;
+			}
+		}
 
 		if (!eaten) {
 			if (snakeHead.intersects(food.getBounds2D())) {
@@ -241,6 +248,8 @@ public class Game extends JComponent {
 		}
 
 		repaint();
+		
+		return false;
 	}
 
 }
