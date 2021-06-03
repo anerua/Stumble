@@ -233,8 +233,7 @@ public class Game extends JComponent {
 		
 		for (int i = 1; i < snake.size(); i++) {
 			if (snakeHead.intersects(snake.get(i).getBounds2D())) {
-				System.out.println("Game over");
-				return true;
+				return true;  // return true to stop game timer
 			}
 		}
 
@@ -249,7 +248,7 @@ public class Game extends JComponent {
 
 		repaint();
 		
-		return false;
+		return false;  // game not yet over
 	}
 
 }

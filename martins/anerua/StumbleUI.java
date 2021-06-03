@@ -67,8 +67,8 @@ public class StumbleUI implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		Boolean over = game.update();
-		if (over) {
+		Boolean game_over = game.update();
+		if (game_over) {
 			timer.stop();
 		}
 	}
