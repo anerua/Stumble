@@ -64,6 +64,7 @@ public class StumbleUI implements ActionListener{
 		frame.setResizable(false);
 		frame.setBounds(100, 100, 642, 500);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setTitle("Snake Game");
 		frame.getContentPane().setLayout(new BorderLayout(0, 0));
 		game = new Game();
 		frame.getContentPane().add(game, BorderLayout.CENTER);
