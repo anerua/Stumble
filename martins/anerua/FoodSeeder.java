@@ -20,6 +20,12 @@ public class FoodSeeder {
 		MAX_Y = boardHeight;
 	}
 	
+	/**
+	 * Generates food in a valid position
+	 * 
+	 * @param snake - the current snake
+	 * @return
+	 */
 	public Ellipse2D.Double seedFood(ArrayList<Ellipse2D.Double> snake) {
 		Set<Integer> bad_x = new HashSet<Integer>();
 		Set<Integer> bad_y = new HashSet<Integer>();

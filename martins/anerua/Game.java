@@ -19,11 +19,12 @@ import javax.swing.JComponent;
 public class Game extends JComponent {
 
 	private static final int LEFT = -1, RIGHT = 1, DOWN = -2, UP = 2, STILL = 0;
+	private static final int SNAKE_SEGMENT_WIDTH = 10, SNAKE_SEGMENT_HEIGHT = 10;
+	private static final int SNAKE_SPEED = 10;
+	private static final int START_X = 100, START_Y = 100;
 
 	private BufferedImage buffer;
 
-	private int start_x = 100, start_y = 100, snakeWidth = 10, snakeHeight = 10;
-	private int step = 10;
 
 	private ArrayList<Ellipse2D.Double> snake = new ArrayList<Ellipse2D.Double>();
 
@@ -34,13 +35,13 @@ public class Game extends JComponent {
 	private Ellipse2D.Double food;
 	private boolean eaten = true, grow = false;
 
-	private double tail_x = start_x, tail_y = start_y; // position of snake tail
+	private double tail_x = START_X, tail_y = START_Y; // position of snake tail
 	
 	private int score = 0;
 
 	public Game() {
 
-		snake.add(new Ellipse2D.Double(start_x, start_y, snakeWidth, snakeHeight));
+		snake.add(new Ellipse2D.Double(START_X, START_Y, SNAKE_SEGMENT_WIDTH, SNAKE_SEGMENT_HEIGHT));
 
 		addComponentListener(new ComponentAdapter() {
 
@@ -145,13 +146,13 @@ public class Game extends JComponent {
 	 */
 	private void updateSnakeHeadPosition(double snakeHead_x, double snakeHead_y) {
 		if (snakeHead_x > getWidth()) {
-			snakeHead_x = 0 - snakeWidth;
-		} else if (snakeHead_x < 0 - snakeWidth) {
+			snakeHead_x = 0 - SNAKE_SEGMENT_WIDTH;
+		} else if (snakeHead_x < 0 - SNAKE_SEGMENT_WIDTH) {
 			snakeHead_x = getWidth();
 		}
 		if (snakeHead_y > getHeight()) {
-			snakeHead_y = 0 - snakeHeight;
-		} else if (snakeHead_y < 0 - snakeHeight) {
+			snakeHead_y = 0 - SNAKE_SEGMENT_HEIGHT;
+		} else if (snakeHead_y < 0 - SNAKE_SEGMENT_HEIGHT) {
 			snakeHead_y = getHeight();
 		}
 
@@ -196,7 +197,7 @@ public class Game extends JComponent {
 	 * Adds a snake segment at previous position of snake tail
 	 */
 	private void growSnake() {
-		snake.add(new Ellipse2D.Double(tail_x, tail_y, snakeWidth, snakeHeight));
+		snake.add(new Ellipse2D.Double(tail_x, tail_y, SNAKE_SEGMENT_WIDTH, SNAKE_SEGMENT_HEIGHT));
 	}
 	
 	public int getScore() {
@@ -222,16 +223,16 @@ public class Game extends JComponent {
 
 		switch (direction) {
 		case LEFT:
-			newSnakeHead_x = snakeHead.x - step;
+			newSnakeHead_x = snakeHead.x - SNAKE_SPEED;
 			break;
 		case RIGHT:
-			newSnakeHead_x = snakeHead.x + step;
+			newSnakeHead_x = snakeHead.x + SNAKE_SPEED;
 			break;
 		case UP:
-			newSnakeHead_y = snakeHead.y - step;
+			newSnakeHead_y = snakeHead.y - SNAKE_SPEED;
 			break;
 		case DOWN:
-			newSnakeHead_y = snakeHead.y + step;
+			newSnakeHead_y = snakeHead.y + SNAKE_SPEED;
 			break;
 		}
 
