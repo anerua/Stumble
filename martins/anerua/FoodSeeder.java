@@ -41,13 +41,13 @@ public class FoodSeeder {
 	 * @return - returns generated food
 	 */
 	public Ellipse2D.Double seedFood(ArrayList<Ellipse2D.Double> snake) {
-		int chosen_x = random.nextInt(MAX_X);
-		int chosen_y = random.nextInt(MAX_Y);
+		int chosen_x = (random.nextInt(MAX_X) / Game.SNAKE_SPEED) * Game.SNAKE_SPEED;
+		int chosen_y = (random.nextInt(MAX_Y) / Game.SNAKE_SPEED) * Game.SNAKE_SPEED;
 		Ellipse2D.Double food = new Ellipse2D.Double(chosen_x, chosen_y, FOOD_WIDTH, FOOD_HEIGHT);
 		
 		while (snakeIntersects(snake, food)) {
-			chosen_x = random.nextInt(MAX_X);
-			chosen_y = random.nextInt(MAX_Y);
+			chosen_x = (random.nextInt(MAX_X) / Game.SNAKE_SPEED) * Game.SNAKE_SPEED;
+			chosen_y = (random.nextInt(MAX_Y) / Game.SNAKE_SPEED) * Game.SNAKE_SPEED;
 			food = new Ellipse2D.Double(chosen_x, chosen_y, FOOD_WIDTH, FOOD_HEIGHT);
 		}
 		
