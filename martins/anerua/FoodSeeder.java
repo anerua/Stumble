@@ -23,7 +23,7 @@ public class FoodSeeder {
 	 * 
 	 * @param snake - the current snake
 	 * @param food - the food being checked
-	 * @return
+	 * @return - returns true if food intercepts any snake segment, false otherwise
 	 */
 	private Boolean snakeIntersects(ArrayList<Ellipse2D.Double> snake, Ellipse2D.Double food) {
 		for (Ellipse2D.Double segment : snake) {
@@ -38,7 +38,7 @@ public class FoodSeeder {
 	 * Generates food in a valid position
 	 * 
 	 * @param snake - the current snake
-	 * @return
+	 * @return - returns generated food
 	 */
 	public Ellipse2D.Double seedFood(ArrayList<Ellipse2D.Double> snake) {
 		int chosen_x = random.nextInt(MAX_X);
