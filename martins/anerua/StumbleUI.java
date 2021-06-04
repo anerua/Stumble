@@ -104,7 +104,5 @@ public class StumbleUI implements ActionListener{
 			timer.stop();
 		}
 	}
-	
-	
 
 }

@@ -145,15 +145,15 @@ public class Game extends JComponent {
 	 * @param snakeHead_y - new y position of snake head
 	 */
 	private void updateSnakeHeadPosition(double snakeHead_x, double snakeHead_y) {
-		if (snakeHead_x > getWidth()) {
-			snakeHead_x = 0 - SNAKE_SEGMENT_WIDTH;
-		} else if (snakeHead_x < 0 - SNAKE_SEGMENT_WIDTH) {
-			snakeHead_x = getWidth();
+		if (snakeHead_x > getWidth() - SNAKE_SEGMENT_WIDTH) {
+			snakeHead_x = 0;
+		} else if (snakeHead_x < 0) {
+			snakeHead_x = getWidth() - SNAKE_SEGMENT_WIDTH;
 		}
-		if (snakeHead_y > getHeight()) {
-			snakeHead_y = 0 - SNAKE_SEGMENT_HEIGHT;
-		} else if (snakeHead_y < 0 - SNAKE_SEGMENT_HEIGHT) {
-			snakeHead_y = getHeight();
+		if (snakeHead_y > getHeight() - SNAKE_SEGMENT_HEIGHT) {
+			snakeHead_y = 0;
+		} else if (snakeHead_y < 0) {
+			snakeHead_y = getHeight() - SNAKE_SEGMENT_HEIGHT;
 		}
 
 		snake.get(0).x = snakeHead_x;
