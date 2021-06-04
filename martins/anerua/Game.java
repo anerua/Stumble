@@ -19,7 +19,7 @@ import javax.swing.JComponent;
 public class Game extends JComponent {
 
 	private static final int LEFT = -1, RIGHT = 1, DOWN = -2, UP = 2, STILL = 0;
-	private static final int SNAKE_SEGMENT_WIDTH = 10, SNAKE_SEGMENT_HEIGHT = 10;
+	protected static final int SNAKE_SEGMENT_WIDTH = 10, SNAKE_SEGMENT_HEIGHT = 10;
 	private static final int SNAKE_SPEED = 10;
 	private static final int START_X = 100, START_Y = 100;
 

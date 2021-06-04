@@ -14,8 +14,8 @@ public class FoodSeeder {
 	Random random = new Random();
 	
 	public FoodSeeder(int boardWidth, int boardHeight) {
-		MAX_X = boardWidth;
-		MAX_Y = boardHeight;
+		MAX_X = boardWidth - Game.SNAKE_SEGMENT_WIDTH;
+		MAX_Y = boardHeight - Game.SNAKE_SEGMENT_HEIGHT;
 	}
 	
 	/**
