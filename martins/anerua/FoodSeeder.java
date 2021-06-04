@@ -31,8 +31,12 @@ public class FoodSeeder {
 		Set<Integer> bad_y = new HashSet<Integer>();
 		
 		for (Ellipse2D.Double segment : snake) {
-			bad_x.add((int)segment.x);
-			bad_y.add((int)segment.y);
+			for (int i = 0; i < Game.SNAKE_SEGMENT_WIDTH; i++) {
+				bad_x.add((int)(segment.x + i));
+			}
+			for (int i = 0; i < Game.SNAKE_SEGMENT_HEIGHT; i++) {
+				bad_y.add((int)(segment.y + i));
+			}
 		}
 	
 		int chosen_x = random.nextInt(MAX_X);
