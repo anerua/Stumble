@@ -51,21 +51,24 @@ public class StumbleUI implements ActionListener{
 	 * Create the application.
 	 */
 	public StumbleUI() {
+		timer = new Timer(MEDIUM, this);
+		game = new Game();
+		
 		initialize();
+		
+		timer.start();
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		timer = new Timer(MEDIUM, this);
 		frame = new JFrame();
 		frame.setResizable(false);
 		frame.setBounds(100, 100, 642, 500);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setTitle("Snake Game");
 		frame.getContentPane().setLayout(new BorderLayout(0, 0));
-		game = new Game();
 		frame.getContentPane().add(game, BorderLayout.CENTER);
 		
 		JPanel panel = new JPanel();
@@ -76,7 +79,6 @@ public class StumbleUI implements ActionListener{
 		gbl_panel.columnWeights = new double[]{0.0, Double.MIN_VALUE};
 		gbl_panel.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
 		panel.setLayout(gbl_panel);
-		
 		
 		JLabel scoreLabel = new JLabel();
 		scoreLabel.setText("Score:");
@@ -92,8 +94,6 @@ public class StumbleUI implements ActionListener{
 		gbc_scoreValue.gridy = 1;
 		panel.add(scoreValue, gbc_scoreValue);
 		
-		
-		timer.start();
 	}
 
 	@Override
