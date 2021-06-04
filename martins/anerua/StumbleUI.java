@@ -22,9 +22,9 @@ public class StumbleUI implements ActionListener{
 	
 	private Game game;
 	
-	private static final int FAST = 30;
-	private static final int MEDIUM = 70;
-	private static final int SLOW = 120;
+	private static final int FAST = 50;
+	private static final int MEDIUM = 100;
+	private static final int SLOW = 150;
 
 	/**
 	 * Launch the application.
