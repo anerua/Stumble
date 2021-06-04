@@ -20,6 +20,15 @@ public class FoodSeeder {
 		MAX_Y = boardHeight;
 	}
 	
+	private Boolean snakeIntersects(ArrayList<Ellipse2D.Double> snake, Ellipse2D.Double food) {
+		for (Ellipse2D.Double segment : snake) {
+			if (food.intersects(segment.getBounds2D())) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	/**
 	 * Generates food in a valid position
 	 * 
@@ -27,29 +36,17 @@ public class FoodSeeder {
 	 * @return
 	 */
 	public Ellipse2D.Double seedFood(ArrayList<Ellipse2D.Double> snake) {
-		Set<Integer> bad_x = new HashSet<Integer>();
-		Set<Integer> bad_y = new HashSet<Integer>();
-		
-		for (Ellipse2D.Double segment : snake) {
-			for (int i = 0; i < Game.SNAKE_SEGMENT_WIDTH; i++) {
-				bad_x.add((int)(segment.x + i));
-			}
-			for (int i = 0; i < Game.SNAKE_SEGMENT_HEIGHT; i++) {
-				bad_y.add((int)(segment.y + i));
-			}
-		}
-	
 		int chosen_x = random.nextInt(MAX_X);
-		while (bad_x.contains(chosen_x)) {
-			chosen_x = random.nextInt(MAX_X);
-		}
-		
 		int chosen_y = random.nextInt(MAX_Y);
-		while (bad_y.contains(chosen_y)) {
+		Ellipse2D.Double food = new Ellipse2D.Double(chosen_x, chosen_y, FOOD_WIDTH, FOOD_HEIGHT);
+		
+		while (snakeIntersects(snake, food)) {
+			chosen_x = random.nextInt(MAX_X);
 			chosen_y = random.nextInt(MAX_Y);
+			food = new Ellipse2D.Double(chosen_x, chosen_y, FOOD_WIDTH, FOOD_HEIGHT);
 		}
 		
-		return new Ellipse2D.Double(chosen_x, chosen_y, FOOD_WIDTH, FOOD_HEIGHT);
+		return food;
 	}
 
 }
