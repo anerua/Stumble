@@ -6,8 +6,8 @@ import java.util.Random;
 
 public class FoodSeeder {
 	
-	private static final int FOOD_WIDTH = 10;
-	private static final int FOOD_HEIGHT = 10;
+	protected static final int FOOD_WIDTH = 10;
+	protected static final int FOOD_HEIGHT = 10;
 	
 	private static int MAX_X, MAX_Y;
 
@@ -40,7 +40,7 @@ public class FoodSeeder {
 	 * @param snake - the current snake
 	 * @return - returns generated food
 	 */
-	public Ellipse2D.Double seedFood(ArrayList<Ellipse2D.Double> snake) {
+	protected Ellipse2D.Double seedFood(ArrayList<Ellipse2D.Double> snake) {
 		int chosen_x = (random.nextInt(MAX_X) / Game.SNAKE_SPEED) * Game.SNAKE_SPEED;
 		int chosen_y = (random.nextInt(MAX_Y) / Game.SNAKE_SPEED) * Game.SNAKE_SPEED;
 		Ellipse2D.Double food = new Ellipse2D.Double(chosen_x, chosen_y, FOOD_WIDTH, FOOD_HEIGHT);

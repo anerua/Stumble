@@ -21,7 +21,7 @@ public class Game extends JComponent {
 	private static final int LEFT = -1, RIGHT = 1, DOWN = -2, UP = 2, STILL = 0;
 	protected static final int SNAKE_SEGMENT_WIDTH = 10, SNAKE_SEGMENT_HEIGHT = 10;
 	protected static final int SNAKE_SPEED = 10;
-	private static final int START_X = 100, START_Y = 100;
+	private static final int START_X = 300, START_Y = 200;
 
 	private BufferedImage buffer;
 
@@ -169,7 +169,7 @@ public class Game extends JComponent {
 	private void updateSnakeSegmentPosition(double oldSnakeHead_x, double oldSnakeHead_y) {
 		double new_x = oldSnakeHead_x, new_y = oldSnakeHead_y;
 		double temp_x = new_x, temp_y = new_y;
-
+		
 		for (int i = 1; i < snake.size(); i++) {
 			temp_x = snake.get(i).x;
 			temp_y = snake.get(i).y;
@@ -200,14 +200,21 @@ public class Game extends JComponent {
 		snake.add(new Ellipse2D.Double(tail_x, tail_y, SNAKE_SEGMENT_WIDTH, SNAKE_SEGMENT_HEIGHT));
 	}
 	
-	public int getScore() {
+	/**
+	 * Getter method for getting current game score
+	 * 
+	 * @return current game score
+	 */
+	protected int getScore() {
 		return score;
 	}
 
 	/**
 	 * Main game repeating function. Follows Timer in Main UI.
+	 * 
+	 * @return true if game is over, false otherwise
 	 */
-	public Boolean update() {
+	protected Boolean update() {
 
 		if (grow) {
 			growSnake();
