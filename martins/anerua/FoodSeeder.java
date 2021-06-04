@@ -18,6 +18,13 @@ public class FoodSeeder {
 		MAX_Y = boardHeight;
 	}
 	
+	/**
+	 * Checks if food location intercepts location of any snake segment
+	 * 
+	 * @param snake - the current snake
+	 * @param food - the food being checked
+	 * @return
+	 */
 	private Boolean snakeIntersects(ArrayList<Ellipse2D.Double> snake, Ellipse2D.Double food) {
 		for (Ellipse2D.Double segment : snake) {
 			if (food.intersects(segment.getBounds2D())) {
